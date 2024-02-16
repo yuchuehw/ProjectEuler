@@ -1,3 +1,7 @@
+// In the grid 20 x 20 below,
+//     
+// What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the grid?
+    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
