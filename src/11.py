@@ -22,6 +22,6 @@ for x in range(len(grid[0])):
 
 for x in range(-len(grid) + 1, len(grid[0])):
     max_ = max(max_, max_group_of_n(grid.diagonal(x), GROUP_SIZE))
-    max_ = max(max_, max_group_of_n(numpy.fliplr(grid).diagonal(x), GROUP_SIZE))
+    max_ = max(max_, max_group_of_n(grid[:,::-1].diagonal(x), GROUP_SIZE))
 
 print(max_)  # 70600674
