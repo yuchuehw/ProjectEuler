@@ -96,36 +96,35 @@ int main() {
         if(m > max)
             max=m;
     }
-    // diag-1
+    // diag/anti-diag 1
     for(int i=0;i<size.rows-GROUPSIZE;i++){
         PRODTYPE m = max_in_one_dir(
             grid[size.rows-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
 
         if(m > max)
             max=m;
+
+        m = max_in_one_dir(
+            &grid[size.rows-i-GROUPSIZE][size.cols-1],GROUPSIZE,size.cols-1,i);
+        
+        if(m > max)
+            max=m;
     }
-    // diag-2
+    // diag/anti-diag 2
     for(int i=0;i<size.cols-GROUPSIZE;i++){
         PRODTYPE m = max_in_one_dir(
             &grid[0][size.cols-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
-
+        
         if(m > max)
             max=m;
-    }
-    // anti-diag-1
-    for(int i=0;i<size.rows-GROUPSIZE;i++){
-        PRODTYPE m = max_in_one_dir(
-            &grid[size.rows-i-GROUPSIZE][size.cols-1],GROUPSIZE,size.cols-1,i);
-        if(m > max)
-            max=m;
-    }
-    // anti-diag-2
-    for(int i=0;i<size.cols-GROUPSIZE;i++){
-        PRODTYPE m = max_in_one_dir(
+        
+        m = max_in_one_dir(
             &grid[0][i+GROUPSIZE-1],GROUPSIZE,size.cols-1,i);
+        
         if(m > max)
             max=m;
     }
+    
     printf(FORMATTER,max); // 70600674
 
     return 0;
