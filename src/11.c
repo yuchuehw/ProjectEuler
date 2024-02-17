@@ -1,11 +1,14 @@
-// In the grid 20 x 20 below,
-//     
-// What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the grid?
-    
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #define GROUPSIZE 4
+// for bigger group size edit line 6 from int --> long 
+//                          & line 7 from INT_MAX --> LONG_MAX
+//                          & line 7 from "%d\n" --> "%ld\n"
+#define PRODTYPE long
+#define PRODTYPE_MAX LONG_MAX
+#define FORMATTER "%ld\n"
 #define GRID_STRING "\
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08\n\
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00\n\
@@ -28,6 +31,7 @@
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54\n\
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
+
 struct GridSize {
     int rows;
     int cols;
@@ -39,7 +43,7 @@ struct GridSize calc_grid_size(char *s) {
     size.cols = 0;
 
     char *token = strtok(s, "\n");
-    char first_row[300];
+    char first_row[strlen(GRID_STRING)];
     first_row[0] = '\0';
 
     while (token != NULL) {
@@ -69,12 +73,16 @@ void initGrid(int* grid, char *s) {
     }
 }
 
-int max_in_one_dir(int *pos_ptr, int group_size, int jump, int depth){
-    int max = -1;
-    for(int i=0;i<depth;i++){
-        int prod = 1;
+PRODTYPE max_in_one_dir(int *pos_ptr, int group_size, int jump, int depth){
+    long max = -1;
+    for(int i=0;i<=depth;i++){
+        PRODTYPE prod = 1;
         int *ptr_cpy = pos_ptr;
         for(int j=0;j<group_size;j++){
+            if (*ptr_cpy!=0 && prod > PRODTYPE_MAX / *ptr_cpy) {
+                printf("an overflow occurs when performing max_in_one_dir(). consider changing the PRODTYPE.\n");
+                exit(1);
+            }
             prod *= *ptr_cpy;
             ptr_cpy += jump;
         }
@@ -92,17 +100,17 @@ int main() {
 
     int grid[size.rows][size.cols];
     initGrid(grid[0], GRID_STRING);
-    int max = -1;
+    PRODTYPE max = -1;
     // row
     for(int i=0;i<size.rows;i++){
-        int m = max_in_one_dir(
+        PRODTYPE m = max_in_one_dir(
             grid[i],GROUPSIZE,1,size.cols-GROUPSIZE);
         if(m > max)
             max=m;
     }
     // col
     for(int i=0;i<size.cols;i++){
-        int m = max_in_one_dir(
+        PRODTYPE m = max_in_one_dir(
             &grid[0][i],GROUPSIZE,size.cols,size.rows-GROUPSIZE);
 
         if(m > max)
@@ -110,33 +118,35 @@ int main() {
     }
     // diag-1
     for(int i=0;i<size.rows-GROUPSIZE;i++){
-        int m = max_in_one_dir(
-            grid[size.rows-1-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
+        PRODTYPE m = max_in_one_dir(
+            grid[size.rows-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
+
         if(m > max)
             max=m;
     }
     // diag-2
     for(int i=0;i<size.cols-GROUPSIZE;i++){
-        int m = max_in_one_dir(
-            &grid[0][size.cols-1-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
+        PRODTYPE m = max_in_one_dir(
+            &grid[0][size.cols-i-GROUPSIZE],GROUPSIZE,size.cols+1,i);
+
         if(m > max)
             max=m;
     }
     // anti-diag-1
     for(int i=0;i<size.rows-GROUPSIZE;i++){
-        int m = max_in_one_dir(
-            &grid[size.rows-1-i-GROUPSIZE][size.cols-1],GROUPSIZE,size.cols-1,i);
+        PRODTYPE m = max_in_one_dir(
+            &grid[size.rows-i-GROUPSIZE][size.cols-1],GROUPSIZE,size.cols-1,i);
         if(m > max)
             max=m;
     }
     // anti-diag-2
     for(int i=0;i<size.cols-GROUPSIZE;i++){
-        int m = max_in_one_dir(
-            &grid[0][i+4],GROUPSIZE,size.cols-1,i);
+        PRODTYPE m = max_in_one_dir(
+            &grid[0][i+GROUPSIZE-1],GROUPSIZE,size.cols-1,i);
         if(m > max)
             max=m;
     }
-    printf("%i\n",max); // 70600674
+    printf(FORMATTER,max); // 70600674
 
     return 0;
 }
