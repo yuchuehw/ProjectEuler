@@ -1,3 +1,5 @@
+# include <stdio.h>
+# include <string.h>
 void main() {
     const int FIRST_K = 2000000;
     char is_prime[FIRST_K + 1];
@@ -15,5 +17,5 @@ void main() {
         if (!is_prime[i])
             sum += i;
     }
-    printf("%lld\n", sum); // 142913828922
+    printf("%ld\n", sum); // 142913828922
 }
