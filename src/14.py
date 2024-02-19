@@ -9,4 +9,3 @@ def collatz(n, cache={}):# cache act as a static variable here.
 
 max_pair = max(((collatz(x), x) for x in range(LIMIT // 2, LIMIT)))
 print(max_pair[1])
-
