@@ -1,4 +1,8 @@
-#include <math.h>
+// What is the 10001 st prime number?
+
+# include <stdio.h>
+# include <math.h>
+# define KTH_PRIME 10001
 
 int is_prime(int n) {
     for (int i = 2; i <= sqrt(n); i++) {
@@ -9,13 +13,12 @@ int is_prime(int n) {
 }
 
 void main() {
-    const int TARGET = 10001;
     int i = 1;
     int counter = 0;
-    while (counter < TARGET) {
+    while (counter < KTH_PRIME) {
         i += 1;
         if (is_prime(i))
             counter += 1;
     }
-    printf("%d\n", i); // 104743
+    printf("The %ith prime is %d\n",KTH_PRIME, i); // 104743
 }
