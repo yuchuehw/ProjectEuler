@@ -1,7 +1,8 @@
 // The four adjacent digits in the 1000-digit number that have the greatest product are 9*9*8*9=5832.
 // 
 // Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?
-
+# include <stdio.h>
+# include <string.h>
 void main() {
     const int CONSECUTIVE_DIGITS = 13;
     const char DIGITS[] = "\
@@ -25,7 +26,7 @@ void main() {
 84580156166097919133875499200524063689912560717606\
 05886116467109405077541002256983155200055935729725\
 71636269561882670428252483600823257530420752963450";
-    const char *digits_ptr = &DIGITS;   
+    const char *digits_ptr = DIGITS;   
     const char *endofstr_ptr = digits_ptr + strlen(DIGITS);
     int max = -1;
     while (digits_ptr + CONSECUTIVE_DIGITS <= endofstr_ptr) {
@@ -37,5 +38,4 @@ void main() {
         digits_ptr += 1;
     }
     printf("%d\n", max);
-    return 0;
 }
