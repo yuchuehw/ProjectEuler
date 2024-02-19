@@ -2,7 +2,7 @@
 // 9009 = 91 x 99.
 // 
 // Find the largest palindrome made from the product of two 3-digit numbers.
-  
+# include <stdio.h>
 #include <string.h>
 #include <math.h>
 
