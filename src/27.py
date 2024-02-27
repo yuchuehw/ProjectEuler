@@ -1,5 +1,6 @@
 import multiprocessing
-
+A_RANGE=range(-1000,1001)
+B_RANGE=range(-1000,1001)
 
 def max_n(n,a,b):
     x=n**2 + a * n + b
@@ -7,19 +8,12 @@ def max_n(n,a,b):
         return 0
     return 1+max_n(n+1,a,b)
 
-
 def find_a_b(args):
     a, b_range = args
     return max((max_n(0,a,b),a,b)for b in b_range)
-
-
+    
 if __name__ == '__main__':
-    a=b=range(-1000,1001)
-
     with multiprocessing.Pool() as pool:
-        results = pool.map_async(find_a_b, [(a, b) for a in a])
-        max_, i, j = max(results.get())
-
-        print("Max:", max_)
-        print("Pair:", (i, j))
-        print("Product:", i * j)
+        results = pool.map_async(find_a_b, [(a, B_RANGE) for a in A_RANGE])
+        _, i, j = max(results.get())
+        print(i*j)
