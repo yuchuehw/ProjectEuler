@@ -10,23 +10,23 @@
 #define RED 0
 #define BLACK 1
 
-struct Node {
+typedef struct Node {
     int *data;
     struct Node *left;
     struct Node *right;
     struct Node *parent;
     int color;
-};
+} Node;
 
-struct RBTree {
-    struct Node *root;
-};
+typedef struct RBTree {
+    Node *root;
+} RBTree;
 
 void primeFactor(int *arr, int num) {
     for (int k = 2; k <= num; ++k) {
         while (num % k == 0) {
             num /= k;
-            arr[k] += 1;
+            arr[(k-1)/2] += 1;
         }
     }
 }
@@ -42,8 +42,8 @@ int compareArrays(const int *arr1, const int *arr2, int size) {
     return 0;
 }
 
-struct Node* createNode(const int *arr, int size) {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+Node* createNode(const int *arr, int size) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
     if (newNode == NULL) {
         perror("Memory allocation error");
         exit(EXIT_FAILURE);
@@ -62,8 +62,8 @@ struct Node* createNode(const int *arr, int size) {
     return newNode;
 }
 
-void leftRotate(struct RBTree *tree, struct Node *x) {
-    struct Node *y = x->right;
+void leftRotate(RBTree *tree, Node *x) {
+    Node *y = x->right;
     x->right = y->left;
     if (y->left != NULL) {
         y->left->parent = x;
@@ -80,8 +80,8 @@ void leftRotate(struct RBTree *tree, struct Node *x) {
     x->parent = y;
 }
 
-void rightRotate(struct RBTree *tree, struct Node *y) {
-    struct Node *x = y->left;
+void rightRotate(RBTree *tree, Node *y) {
+    Node *x = y->left;
     y->left = x->right;
     if (x->right != NULL) {
         x->right->parent = y;
@@ -98,10 +98,10 @@ void rightRotate(struct RBTree *tree, struct Node *y) {
     y->parent = x;
 }
 
-void insertFixup(struct RBTree *tree, struct Node *z) {
+void insertFixup(RBTree *tree, Node *z) {
     while (z->parent != NULL && z->parent->color == RED) {
         if (z->parent == z->parent->parent->left) {
-            struct Node *y = z->parent->parent->right;
+            Node *y = z->parent->parent->right;
             if (y != NULL && y->color == RED) {
                 z->parent->color = BLACK;
                 y->color = BLACK;
@@ -117,7 +117,7 @@ void insertFixup(struct RBTree *tree, struct Node *z) {
                 rightRotate(tree, z->parent->parent);
             }
         } else {
-            struct Node *y = z->parent->parent->left;
+            Node *y = z->parent->parent->left;
             if (y != NULL && y->color == RED) {
                 z->parent->color = BLACK;
                 y->color = BLACK;
@@ -137,13 +137,13 @@ void insertFixup(struct RBTree *tree, struct Node *z) {
     tree->root->color = BLACK;
 }
 
-void insertNode(struct RBTree *tree, int *z, int *listLength, int size) {
-    struct Node *y = NULL;
-    struct Node *x = tree->root;
+void insertNode(RBTree *tree, int *z, int *listLength, int size) {
+    Node *y = NULL;
+    Node *x = tree->root;
 
     while (x != NULL) {
         y = x;
-        int compare_result = compareArrays(z, x->data, A_MAX);
+        int compare_result = compareArrays(z, x->data, size);
         if (compare_result == 0){
             return; // node already exist. return early
         }
@@ -153,7 +153,7 @@ void insertNode(struct RBTree *tree, int *z, int *listLength, int size) {
             x = x->right;
         }
     }
-    struct Node *newNode = createNode(z, size);
+    Node *newNode = createNode(z, size);
 
     newNode->parent = y;
     if (y == NULL) {
@@ -168,7 +168,7 @@ void insertNode(struct RBTree *tree, int *z, int *listLength, int size) {
     (*listLength)++;
 }
 
-void freeTree(struct Node *root) {
+void freeTree(Node *root) {
     if (root != NULL) {
         freeTree(root->left);
         freeTree(root->right);
@@ -178,22 +178,19 @@ void freeTree(struct Node *root) {
 }
 
 int main() {
-    struct RBTree tree;
+    RBTree tree;
     tree.root = NULL;
-    int size = A_MAX;
+    int size = (A_MAX-1)/2+1;//why couldn't i shrink the size?
     int listLength = 0;
 
     for (int i = A_MIN; i <= A_MAX; ++i) {
-        int arr[A_MAX] = {0};
+        int arr[size];
+        memset(arr,0,sizeof(int)*size);
         primeFactor(arr, i);
 
         for (int j = B_MIN; j <= B_MAX; ++j) {
-            int *arr2 = (int *)malloc(size * sizeof(int));
-            if (arr2 == NULL) {
-                perror("Memory allocation error");
-                exit(EXIT_FAILURE);
-            }
-
+            int arr2[size];
+            
             for (int k = 0; k < size; ++k) {
                 arr2[k] = arr[k] * j;
             }
