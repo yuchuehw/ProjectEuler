@@ -1,4 +1,2 @@
-answer = 0
-for i in range(2,1000000):
-    answer+=[0,i][sum(int(j)**5 for j in str(i)) == i]
-print(answer)
+POWER=5
+print(sum(i for i in range(2,1000000)if i==sum([int(d)**POWER for d in str(i)])))
