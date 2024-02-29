@@ -3,9 +3,9 @@
 #include <string.h>
 
 #define A_MIN 2
-#define A_MAX 100
+#define A_MAX 500
 #define B_MIN 2
-#define B_MAX 100
+#define B_MAX 500
 
 #define RED 0
 #define BLACK 1
@@ -23,10 +23,13 @@ typedef struct RBTree {
 } RBTree;
 
 void primeFactor(int *arr, int num) {
-    for (int k = 2; k <= num; ++k) {
+    for (int k = 2; k <= num; k+=2) {
         while (num % k == 0) {
             num /= k;
             arr[(k-1)/2] += 1;
+        }
+        if(k==2){ //jump to 3.
+            k--;
         }
     }
 }
