@@ -44,5 +44,6 @@ int main() {
         }
     }
     printf("%d\n",answer);
+    free(not_primes);
 
 }
