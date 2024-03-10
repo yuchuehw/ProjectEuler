@@ -27,5 +27,5 @@ jobs:
           git config --global user.name "Yu-Chueh Wang"
           git config --global user.email yuchuehw@outlook.com
           git add ./src
-          git commit -m 'source folder updated!'
+          git commit -m 'source folder updated!' --allow-empty
           git push
