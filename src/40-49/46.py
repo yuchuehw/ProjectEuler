@@ -9,6 +9,7 @@ for i in odd_composite:
         j = ((i-p)//2)**0.5
         if j == int(j):
             flag = False
+            break
     if flag:
         print(i)
-        # break
+        break
