@@ -42,38 +42,40 @@ int main() {
 
     // Finding consecutive numbers
     for (int i = 0; i < K; i++) {
-        bool is_valid = true;
+        bool invalid = false;
         for (int j = i; j < i + WINDOW; j++) {
             if (prime[j]){
-                is_valid = false;
+                invalid = true;
                 break;
             }
         }
 
-        if (is_valid) {
-            int c;
-            for (int j = i; j < i + WINDOW; j++) {
-                c = 0;
-                int n = j;
-                for (int k = 0; k < count; k++) {
-                    if (n % prime_num[k] == 0) {
-                        c++;
-                    }
-                    while (n % prime_num[k] == 0) {
-                        n /= prime_num[k];
-                    }
-                    if (n == 1) {
-                        break;
-                    }
+        if (invalid) {
+            continue;
+        }
+        
+        int c;
+        for (int j = i; j < i + WINDOW; j++) {
+            c = 0;
+            int n = j;
+            for (int k = 0; k < count; k++) {
+                if (n % prime_num[k] == 0) {
+                    c++;
                 }
-                if (c != TARGET) {
+                while (n % prime_num[k] == 0) {
+                    n /= prime_num[k];
+                }
+                if (n == 1) {
                     break;
                 }
             }
-            if (c == TARGET) {
-                printf("%d\n", i);
+            if (c != TARGET) {
                 break;
             }
+        }
+        if (c == TARGET) {
+            printf("%d\n", i);
+            break;
         }
     }
 
