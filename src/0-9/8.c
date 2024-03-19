@@ -28,14 +28,14 @@ void main() {
 71636269561882670428252483600823257530420752963450";
     const char *digits_ptr = DIGITS;   
     const char *endofstr_ptr = digits_ptr + strlen(DIGITS);
-    int max = -1;
+    long max = -1;
     while (digits_ptr + CONSECUTIVE_DIGITS <= endofstr_ptr) {
-        int prod = 1;
+        long prod = 1;
         for (int i = 0; i < CONSECUTIVE_DIGITS; i++) {
             prod *= digits_ptr[i] - '0';
         }
         max = (prod > max) ? prod : max;
         digits_ptr += 1;
     }
-    printf("%d\n", max);
+    printf("%ld\n", max);
 }
