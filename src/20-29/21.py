@@ -1,8 +1,3 @@
-N = 10_000
-l = [1]*N
-s = 0
-for i in range(N):
-    j = l[i] = sum([1]+[j for j in range(2,i) if i%j==0])
-    if j<i and l[j] == i:
-        s+=i+j
-print(s)
+N=10_000
+l=[sum(j for j in range(1,i)if i%j==0)for i in range(N)]
+print(sum(v for i,v in enumerate(l)if i!=v<N and l[v]==i))
