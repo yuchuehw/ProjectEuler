@@ -1,9 +1,6 @@
 name: Sort Files Workflow
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   sort-files:
