@@ -10,5 +10,5 @@ def lattice_path(x,y,width,height):
         return 0
     return lattice_path(x+1,y,width,height)+lattice_path(x,y+1,width,height)
 
-    return cache[(x,y)]
+
 print(lattice_path(0,0,WIDTH,HEIGHT)) # 137846528820
