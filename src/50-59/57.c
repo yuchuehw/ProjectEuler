@@ -37,7 +37,7 @@ int main() {
         answer += add(temp_ptr, denominator_ptr, CHAR_ARRAY_SIZE);
         free(temp_ptr);
     }
-    printf("%d", answer);//153
+    printf("%d\n", answer);//153
     free(numerator);
     free(denominator);
     return 0;
