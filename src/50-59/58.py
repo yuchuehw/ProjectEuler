@@ -17,8 +17,7 @@ x = -1
 while True:
     x+=1
     for y in range(4):
-        for _ in range(n):
-            i=i+1
+        i=i+n
         total_count += 1
         if y == 0:
             prime_count += 1 if isprime(i-1) else 0
@@ -31,4 +30,3 @@ while True:
             prime_count += 1 if isprime(i) else 0
         
         m,n=(m-1,n)if m else(1,n+1)
-
