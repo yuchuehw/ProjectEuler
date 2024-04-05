@@ -21,11 +21,9 @@ while True:
         total_count += 1
         if y == 0:
             prime_count += 1 if isprime(i-1) else 0
-            # print(prime_count/total_count,x)
             if prime_count and prime_count/total_count<TARGET:
                 print(x*2+1)
                 exit()
-                
         else:
             prime_count += 1 if isprime(i) else 0
         
