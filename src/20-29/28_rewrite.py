@@ -10,8 +10,7 @@ answer = K*K
 
 for x in range((K-1)//2):
     for y in range(4):
-        for _ in range(n):
-            i=i+1
+        i=i+n
         if y == 0:
             answer += i-1
         else:
