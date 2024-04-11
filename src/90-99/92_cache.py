@@ -4,10 +4,9 @@ from functools import cache
 def is_89_chain(n):
     if n==1:
         return False
-    elif n==89:
+    if n==89:
         return True
-    else:
-        return is_89_chain(sum(int(_)**2 for _ in str(n)))
+    return is_89_chain(sum(int(_)**2 for _ in str(n)))
 
 answer = 0
 
