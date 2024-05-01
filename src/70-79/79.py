@@ -8,7 +8,7 @@ for i in log:
     a,b,c = [int(_) for _ in str(i)]
     d[a][b] = 1
     d[a][c] = 1
-    d[b][b] = 1
+    d[b][c] = 1
     seen[a] = 1
     seen[b] = 1
     seen[c] = 1
