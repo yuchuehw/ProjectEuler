@@ -8,8 +8,8 @@ typedef struct Tuple {
 
 int compareTupleReversed(const void *a, const void *b) {
     Tuple *ta = (Tuple*)a;
-    Tuple *tb = (Tuple*)b; // Corrected from a to b
-    if (ta->y > tb->y) { // Corrected from tb->x to tb->y
+    Tuple *tb = (Tuple*)b;
+    if (ta->y > tb->y) {
         return -1;
     } else if (ta->y < tb->y) {
         return 1;
@@ -58,7 +58,7 @@ int main() {
 
     // Print most occurring digits
     for (i = 0; i < seen_count; i++) {
-        printf("%d", d_most[i].x); // Corrected from d_most->x to d_most[i].x
+        printf("%d", d_most[i].x);
     }
     printf("\n");
 
